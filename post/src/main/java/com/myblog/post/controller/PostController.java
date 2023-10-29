@@ -1,14 +1,14 @@
 package com.myblog.post.controller;
 
+
 import com.myblog.post.entity.Post;
 import com.myblog.post.payload.PostDto;
+import com.myblog.post.repository.PostRepository;
 import com.myblog.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/post")
@@ -17,25 +17,31 @@ public class PostController {
     @Autowired
     private PostService postService;
 
-    @PostMapping
-    public ResponseEntity<Post> savePost(@RequestBody Post post){
+    @Autowired
+    private PostRepository postRepository;
 
-        Post savedPost = postService.savePost(post);
+//  http://localhost:8080/api/post/create
+    @PostMapping("/create")
+    public ResponseEntity<PostDto> createPost(@RequestBody PostDto postdto) {
+
+        PostDto savedPost = postService.createPost(postdto);
         return new ResponseEntity<>(savedPost, HttpStatus.CREATED);
 
     }
 
-    @GetMapping("/{postId}")
-    public Post getPostById(@PathVariable String postId){
-        Post post = postService.getPostById(postId);
-        return post;
+    //    http://localhost:8080/api/post/getpost/{id}
+    @GetMapping("/getpost/{postId}")
+    public PostDto getPostById(@PathVariable String postId) {
+        PostDto postdto = postService.getPostById(postId);
+        return postdto;
     }
 
-    @GetMapping("/{postId}/comments")
-    public ResponseEntity<PostDto> getAllCommentsForParticularPost(@PathVariable String postId){
+    //   http://localhost:8080/api/post/getpost/{id}/comments
+    @GetMapping("/getpost/{postId}/comments")
+    public ResponseEntity<PostDto> getAllCommentsForParticularPost(@PathVariable String postId) {
 
-       PostDto postDto =  postService.getAllCommentsForParticularPost(postId);
+        PostDto postDto = postService.getAllCommentsForParticularPost(postId);
 
-       return new ResponseEntity<>(postDto, HttpStatus.OK);
+        return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
 }

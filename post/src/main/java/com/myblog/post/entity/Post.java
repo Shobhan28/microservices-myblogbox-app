@@ -1,5 +1,6 @@
 package com.myblog.post.entity;
 
+import com.myblog.post.payload.PostDto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

@@ -12,37 +12,12 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class PostService {
-    @Autowired
-    private PostRepository postRepository;
-
-    @Autowired
-    private RestTemplateConfig restTemplate;
+public interface PostService {
 
 
-    public Post savePost(Post post){
-        String randomPostId = UUID.randomUUID().toString();
-        post.setId(randomPostId);
-        Post savedPost = postRepository.save(post);
-        return savedPost;
-    }
+    Post getPostById(String postId);
 
-    public Post getPostById(String postId) {
-        Post post  = postRepository.findById(postId).get();
-        return post;
-    }
+    PostDto getAllCommentsForParticularPost(String postId);
 
-    public PostDto getAllCommentsForParticularPost(String postId) {
-        ArrayList comments = restTemplate.getRestTemplate().getForObject("http://COMMENT-SERVICE/api/comments/" + postId, ArrayList.class);
-
-        Post post = getPostById(postId);
-
-        PostDto dto = new PostDto();
-        dto.setId(post.getId());
-        dto.setTitle(post.getTitle());
-        dto.setDescription(post.getDescription());
-        dto.setContent(post.getContent());
-        dto.setComments(comments);
-        return dto;
-    }
+    PostDto createPost(PostDto postdto);
 }

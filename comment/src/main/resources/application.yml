@@ -2,9 +2,9 @@ spring:
   application:
     name: COMMENT-SERVICE
   datasource:
-    url: jdbc:mysql://localhost:3306/commentdb
+    url: jdbc:mysql://localhost:3306/comment_db2
     username: root
-    password: test
+    password: notmysql
 
   jpa:
     hibernate:
@@ -15,7 +15,7 @@ spring:
       dialect: org.hibernate.dialect.MySQL8Dialect
 
 server:
-  port: 9093
+  port: 8082
 
 eureka:
   instance:

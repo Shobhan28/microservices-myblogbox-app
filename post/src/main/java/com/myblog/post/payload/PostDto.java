@@ -1,5 +1,6 @@
 package com.myblog.post.payload;
 
+import com.myblog.post.entity.Post;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,4 +23,15 @@ public class PostDto {
     private Date publishedDate;
 
     private List<Comment> comments;
+
+    public static PostDto fromEntity(Post updatedPost) {
+        PostDto postDto = new PostDto();
+        postDto.setId(updatedPost.getId());
+        postDto.setTitle(updatedPost.getTitle());
+        postDto.setContent(updatedPost.getContent());
+        postDto.setDescription((updatedPost.getDescription()));
+
+        return postDto;
+    }
 }
+

@@ -13,4 +13,8 @@ public interface PostService {
     PostDto getAllCommentsForParticularPost(String postId);
 
     PostDto createPost(PostDto postdto);
+
+    PostDto updatePost(String postId, PostDto updatedPostDto);
+
+    boolean deletePostById(String postId);
 }

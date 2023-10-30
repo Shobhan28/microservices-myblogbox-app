@@ -4,8 +4,7 @@ import com.myblog.comment.config.RestTemplateConfig;
 import com.myblog.comment.entity.Comment;
 import com.myblog.comment.payload.Post;
 import com.myblog.comment.repository.CommentRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Autowired;;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,8 +28,8 @@ public class CommentService {
 
        if(post!=null) {
 
-           String radomCommentId = UUID.randomUUID().toString();
-           comment.setCommentId(radomCommentId);
+           String randomCommentId = UUID.randomUUID().toString();
+           comment.setCommentId(randomCommentId);
            comment.setPostId(post.getId());
            Comment savedComment = commentRepository.save(comment);
            return savedComment;

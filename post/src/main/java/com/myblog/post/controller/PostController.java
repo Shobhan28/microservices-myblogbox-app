@@ -36,6 +36,8 @@ public class PostController {
         return postdto;
     }
 
+
+    //  Get your comments along with the post
     //   http://localhost:8080/api/post/getpost/{id}/comments
     @GetMapping("/getpost/{postId}/comments")
     public ResponseEntity<PostDto> getAllCommentsForParticularPost(@PathVariable String postId) {
@@ -44,4 +46,29 @@ public class PostController {
 
         return new ResponseEntity<>(postDto, HttpStatus.OK);
     }
+
+    // Update an existing post by ID
+    // http://localhost:8080/api/post/update/{postId}
+    @PutMapping("/update/{postId}")
+    public ResponseEntity<PostDto> updatePost(@PathVariable String postId, @RequestBody PostDto updatedPostDto) {
+        PostDto updatedPost = postService.updatePost(postId, updatedPostDto);
+        if (updatedPost != null) {
+            return new ResponseEntity<>(updatedPost, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    // Delete a post by ID
+    // http://localhost:8080/api/post/delete/{postId}
+    @DeleteMapping("/delete/{postId}")
+    public ResponseEntity<Void> deletePost(@PathVariable String postId) {
+        boolean deleted = postService.deletePost(postId);
+        if (deleted) {
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
+

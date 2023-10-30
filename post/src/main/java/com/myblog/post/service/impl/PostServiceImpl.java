@@ -2,6 +2,7 @@ package com.myblog.post.service.impl;
 
 import com.myblog.post.config.RestTemplateConfig;
 import com.myblog.post.entity.Post;
+import com.myblog.post.exception.ResourceNotFound;
 import com.myblog.post.payload.PostDto;
 import com.myblog.post.repository.PostRepository;
 import com.myblog.post.service.PostService;
@@ -45,6 +46,23 @@ public class PostServiceImpl implements PostService {
         postdto.setPublishedDate(savedPost.getPublishedDate());
 
         return postdto;
+    }
+
+
+    @Override
+    public PostDto updatePost(String postId, PostDto updatedPostDto) {
+
+            Post posts = postRepository.findById(postId)
+                    .orElseThrow(() -> new ResourceNotFound("Post not found with id: " + postId));
+        return mapToDto(posts);
+        }
+
+    @Override
+    public boolean deletePostById(String postId) {
+Post dpost = postRepository.findById(postId).orElseThrow(()->new ResourceNotFound(
+                         "Post not found with this Id : " + postId));
+postRepository.deleteById(postId);
+        return true;
     }
 
     @Override

@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor
@@ -28,6 +28,6 @@ public class Post {
 
     @PrePersist
     protected void onCreate() {
-        publishedDate = new Date();
+        publishedDate = new Date(System.currentTimeMillis());
     }
 }

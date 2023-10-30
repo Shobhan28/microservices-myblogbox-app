@@ -20,7 +20,7 @@ public class PostController {
     @Autowired
     private PostRepository postRepository;
 
-//  http://localhost:8080/api/post/create
+//  http://localhost:8081/api/post/create
     @PostMapping("/create")
     public ResponseEntity<PostDto> createPost(@RequestBody PostDto postdto) {
 
@@ -29,7 +29,7 @@ public class PostController {
 
     }
 
-    //    http://localhost:8080/api/post/getpost/{id}
+    //    http://localhost:8081/api/post/getpost/{id}
     @GetMapping("/getpost/{postId}")
     public PostDto getPostById(@PathVariable String postId) {
         PostDto postdto = postService.getPostById(postId);
@@ -38,7 +38,7 @@ public class PostController {
 
 
     //  Get your comments along with the post
-    //   http://localhost:8080/api/post/getpost/{id}/comments
+    //   http://localhost:8081/api/post/getpost/{id}/comments
     @GetMapping("/getpost/{postId}/comments")
     public ResponseEntity<PostDto> getAllCommentsForParticularPost(@PathVariable String postId) {
 
@@ -48,27 +48,20 @@ public class PostController {
     }
 
     // Update an existing post by ID
-    // http://localhost:8080/api/post/update/{postId}
+    // http://localhost:8081/api/post/update/{postId}
     @PutMapping("/update/{postId}")
     public ResponseEntity<PostDto> updatePost(@PathVariable String postId, @RequestBody PostDto updatedPostDto) {
         PostDto updatedPost = postService.updatePost(postId, updatedPostDto);
-        if (updatedPost != null) {
             return new ResponseEntity<>(updatedPost, HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+
     }
 
     // Delete a post by ID
-    // http://localhost:8080/api/post/delete/{postId}
+    // http://localhost:8081/api/post/delete/{postId}
     @DeleteMapping("/delete/{postId}")
-    public ResponseEntity<Void> deletePost(@PathVariable String postId) {
-        boolean deleted = postService.deletePost(postId);
-        if (deleted) {
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-        }
+    public ResponseEntity<String> deletePostById(@PathVariable String postId) {
+        boolean deleted = postService.deletePostById(postId);
+        return new ResponseEntity<>("Post is Deleted :" +postId,  HttpStatus.OK);
     }
 }
 

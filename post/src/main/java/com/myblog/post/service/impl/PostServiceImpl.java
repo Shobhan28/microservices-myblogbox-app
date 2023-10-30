@@ -8,6 +8,7 @@ import com.myblog.post.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -31,7 +32,7 @@ public class PostServiceImpl implements PostService {
         posts.setTitle(pdto.getTitle());
         posts.setContent(pdto.getContent());
         posts.setDescription(pdto.getDescription());
-        posts.setPublishedDate(pdto.getPublishedDate());
+        posts.setPublishedDate(new Date());
 
         // Save the post to the repository
         Post savedPost = postRepository.save(posts);

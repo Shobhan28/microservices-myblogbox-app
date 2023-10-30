@@ -26,3 +26,41 @@ eureka:
     service-url:
       defaultZone: http://localhost:8761/eureka
 
+
+
+management:
+  health:
+    circuitbreakers:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: health
+
+  endpoint:
+    health:
+      show-details: always
+
+
+
+resilience4j.circuitbreaker:
+  instances:
+    myCommentBreaker: # Replace with your desired circuit breaker name
+      registerHealthIndicator: true # Optional, to register a health indicator
+      eventConsumerBufferSize: 10
+      failureRateThreshold: 50
+      minimumNumberOfCalls: 5
+      automaticTransitionFromOpenToHalfOpenEnabled: true
+      waitDurationInOpenState: 6000
+      permittedNumberOfCallsInHalfOpenState: 3
+      slidingWindowSize: 100
+      slidingWindowType: COUNT_BASED
+      permittedNumberOfFailures: 50
+      slowCallRateThreshold: 100
+      slowCallDurationThreshold: 60000
+      recordExceptions:
+        - java.lang.RuntimeException # Replace with the exceptions you want to record
+      ignoreExceptions:
+        - java.io.IOException # Replace with the exceptions you want to ignore
+      permissions:
+        - io.github.resilience4j.example.service.MyService.doSomething # Replace with the method or service you want to protect

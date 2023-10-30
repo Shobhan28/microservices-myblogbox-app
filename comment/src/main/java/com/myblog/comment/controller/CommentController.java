@@ -16,21 +16,17 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-
-    //  http://localhost:8082/api/comments/create
-    @PostMapping("/create")
-    public ResponseEntity<?> saveComment(@RequestBody Comment comment) {
+    @PostMapping
+    public ResponseEntity<?>  saveComment(@RequestBody Comment comment){
         Comment savedComment = commentService.saveComment(comment);
-        if (savedComment != null) {
-            return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
-        }
-        return new ResponseEntity<>("Post Not Found with id: " + comment.getPostId(), HttpStatus.NOT_FOUND);
+      if(savedComment!=null) {
+          return new ResponseEntity<>(savedComment, HttpStatus.CREATED);
+      }
+      return new ResponseEntity<>("Post Not Found with id: "+comment.getPostId(), HttpStatus.NOT_FOUND);
     }
 
-
-//   http://localhost:8082/api/comments/get/{id}
-    @GetMapping("get/{postId}")
-    public List<Comment> getAllCommentsByPostId(@PathVariable String postId) {
-        return commentService.getCommentByPostId(postId);
+    @GetMapping("/{postId}")
+    public List<Comment> getAllCommentsByPostId(@PathVariable String postId){
+       return commentService.getCommentByPostId(postId);
     }
 }
